@@ -12,7 +12,20 @@ const signUp = catchAsync(async (req, res) => {
     data: result,
   });
 });
+// login
+const login = catchAsync(async (req, res) => {
+  try {
+    const result = await authServices.loginDb(req.body);
+    res.status(httpStatus.OK).json({
+      success: true,
+      statusCode: httpStatus.OK,
+      token: result?.token,
+      data: result?.existingUser,
+    });
+  } catch (error) {}
+});
 
 export const authController = {
   signUp,
+  login,
 };

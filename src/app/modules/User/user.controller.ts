@@ -7,6 +7,7 @@ const getAllUsers = catchAsync(async (req, res) => {
   try {
     res.status(httpStatus.OK).json({
       success: true,
+      statusCode: httpStatus.OK,
       message: "All Users Retrived successfully",
       data: result,
     });
