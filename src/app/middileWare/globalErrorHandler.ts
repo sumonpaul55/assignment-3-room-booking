@@ -12,6 +12,7 @@ const globalErrorhandler: ErrorRequestHandler = (err, req, res, next) => {
       message: "Something went wrong",
     },
   ];
+
   message = err.message;
   statusCode = err.statusCode;
   errorSources = [
@@ -29,3 +30,5 @@ const globalErrorhandler: ErrorRequestHandler = (err, req, res, next) => {
     stack: config.NODE_ENV === "development" && err?.stack,
   });
 };
+
+export default globalErrorhandler;
