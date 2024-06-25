@@ -6,7 +6,7 @@ const createUserValidationSchma = z.object({
     email: z.string({ required_error: "Email is required" }),
     password: z.string().optional(),
     phone: z.string({ required_error: "phone is required" }),
-    role: z.enum(["user", "admin"]),
+    role: z.enum(["user", "admin"]).default("user"),
     address: z.string({ required_error: "address is required" }),
   }),
 });
