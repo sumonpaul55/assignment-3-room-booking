@@ -5,6 +5,18 @@ const creatRooms = async (payLoad: TRooms) => {
   const result = await Rooms.create(payLoad);
   return result;
 };
+// get a rooms
+const getAllRoomsFromDb = async () => {
+  const result = await Rooms.find();
+  return result;
+};
+// get a rooms
+const getAroomsFromDb = async (id: string) => {
+  const result = await Rooms.findById(id);
+  return result;
+};
 export const roomsServices = {
   creatRooms,
+  getAllRoomsFromDb,
+  getAroomsFromDb,
 };

@@ -9,4 +9,5 @@ export default {
   NODE_ENV: process.env.NODE_ENV,
   Access_Token_Secret: process.env.JWT_ACCESS_SECRET,
   JWT_ACCESS_EXPIRE_IN: process.env.JWT_ACCESS_EXPIRE_IN,
+  BCRYPT_SALTROUND: process.env.BCRYPT_SALTROUND,
 };
