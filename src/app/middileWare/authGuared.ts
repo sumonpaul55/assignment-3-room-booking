@@ -12,11 +12,12 @@ interface customRequest extends Request {
 const authGuared = (...requiredRoles: TUserRole[]) => {
   return catchAsync(async (req: customRequest, res: Response, next: NextFunction) => {
     const bearrerToken = req.headers.authorization;
-    const token = bearrerToken?.split(" ")[1];
-    if (!token) {
+    if (!bearrerToken) {
       throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized");
     }
+    const token = bearrerToken?.split(" ")[1];
     const decoded = jwt.verify(token, config.Access_Token_Secret as string) as JwtPayload;
+
     const { email, role, iat, exp } = decoded;
     // chheck if the user is exist
     const existingUser = await User.findOne({ email: email });
@@ -33,7 +34,8 @@ const authGuared = (...requiredRoles: TUserRole[]) => {
       throw new AppError(httpStatus.UNAUTHORIZED, "You are not eligible for this oparation");
     }
     req.user = decoded as JwtPayload;
-    console.log(decoded, "role", requiredRoles);
+
+    next();
   });
 };
 
