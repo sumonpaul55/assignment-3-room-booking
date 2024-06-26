@@ -19,7 +19,7 @@ const getAllRooms = catchAsync(async (req, res) => {
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
-    message: "All room retrieved successfully",
+    message: "Rooms retrieved successfully",
     data: result,
   });
 });
@@ -33,9 +33,19 @@ const getArooms = catchAsync(async (req, res) => {
     data: result,
   });
 });
-
+// update rooms
+const updateRooms = catchAsync(async (req, res) => {
+  const result = await roomsServices.updateRoomsIntoDb(req.params.id, req.body);
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Room updated successfully",
+    data: result,
+  });
+});
 export const roomsController = {
   createRooms,
   getAllRooms,
   getArooms,
+  updateRooms,
 };

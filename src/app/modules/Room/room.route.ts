@@ -10,4 +10,6 @@ const router = Router();
 router.post("/", authGuared(USER_ROLE.admin), validateRequest(roomValidation.createRoomsValidationSchema), roomsController.createRooms);
 router.get("/", roomsController.getAllRooms);
 router.get("/:id", roomsController.getArooms);
+// update rooms
+router.put("/:id", roomsController.updateRooms);
 export const roomRoutes = router;
