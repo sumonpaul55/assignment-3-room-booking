@@ -2,6 +2,7 @@ import httpStatus from "http-status";
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
 import { authServices } from "./auth.service";
+import AppError from "../../erros/AppError";
 
 const signUp = catchAsync(async (req, res) => {
   const result = await authServices.signUpIntoDb(req.body);
@@ -19,10 +20,13 @@ const login = catchAsync(async (req, res) => {
     res.status(httpStatus.OK).json({
       success: true,
       statusCode: httpStatus.OK,
+      message: "User logged in successfully",
       token: result?.token,
       data: result?.existingUser,
     });
-  } catch (error) {}
+  } catch (error: any) {
+    throw new AppError(httpStatus.INTERNAL_SERVER_ERROR, error);
+  }
 });
 
 export const authController = {

@@ -1,4 +1,5 @@
-export type TUserRole = "user" | "admin";
+export type TUserRole = "admin" | "user";
+
 export type TUser = {
   name: string;
   email: string;
@@ -6,4 +7,5 @@ export type TUser = {
   phone: string;
   address: string;
   role: TUserRole;
+  isDeleted: boolean;
 };
