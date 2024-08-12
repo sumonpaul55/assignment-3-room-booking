@@ -1,3 +1,4 @@
+import { isAborted } from "zod";
 import { TRooms } from "./room.interface";
 import { Rooms } from "./room.model";
 
@@ -24,9 +25,15 @@ const updateRoomsIntoDb = async (id: string, payLoad: TRooms) => {
   });
   return result;
 };
+const deleteRoomFromDb = async (payload: string) => {
+  const result = await Rooms.findByIdAndUpdate(payload, { isDeleted: true }, { new: true });
+  return result;
+};
+
 export const roomsServices = {
   creatRooms,
   getAllRoomsFromDb,
   getAroomsFromDb,
   updateRoomsIntoDb,
+  deleteRoomFromDb,
 };
