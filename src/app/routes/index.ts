@@ -3,6 +3,7 @@ import { authRoutes } from "../modules/Auth/auth.route";
 import { userRouters } from "../modules/User/user.route";
 import { roomRoutes } from "../modules/Room/room.route";
 import { bookingsRouter } from "../modules/booking/booking.route";
+import { slotRoute } from "../modules/slot/slot.route";
 const router = express.Router();
 
 const moudleRoute = [
@@ -17,6 +18,10 @@ const moudleRoute = [
   {
     path: "/rooms",
     route: roomRoutes,
+  },
+  {
+    path: "/slots",
+    route: slotRoute,
   },
   {
     path: "/bookings",
