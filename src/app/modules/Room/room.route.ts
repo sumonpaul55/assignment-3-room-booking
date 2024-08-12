@@ -11,5 +11,5 @@ router.post("/", authGuared(USER_ROLE.admin), validateRequest(roomValidation.cre
 router.get("/", roomsController.getAllRooms);
 router.get("/:id", roomsController.getArooms);
 // update rooms
-router.put("/:id", roomsController.updateRooms);
+router.put("/:id", authGuared(USER_ROLE.admin), validateRequest(roomValidation.updateRoomsValidationSchema), roomsController.updateRooms);
 export const roomRoutes = router;

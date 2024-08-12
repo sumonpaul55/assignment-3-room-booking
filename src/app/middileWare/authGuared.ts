@@ -34,7 +34,6 @@ const authGuared = (...requiredRoles: TUserRole[]) => {
       throw new AppError(httpStatus.UNAUTHORIZED, "You are not eligible for this oparation");
     }
     req.user = decoded as JwtPayload;
-
     next();
   });
 };
