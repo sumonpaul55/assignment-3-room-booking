@@ -24,7 +24,7 @@ const moudleRoute = [
     route: slotRoute,
   },
   {
-    path: "/bookings",
+    path: "/",
     route: bookingsRouter,
   },
 ];
