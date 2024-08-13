@@ -8,5 +8,6 @@ import { USER_ROLE } from "../User/user.constant";
 const router = Router();
 
 router.post("/", authGuared(USER_ROLE.user), validateRequest(bookingValidation.bookingValidationSchema), bookingController.addBooking);
+router.get("/", authGuared(USER_ROLE.admin), bookingController.getAllBooking);
 
 export const bookingsRouter = router;

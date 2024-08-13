@@ -17,7 +17,12 @@ const addBookingDb = async (payload: TBooking) => {
   const newBookingId = result._id;
   const lastBookinged = await Bookings.findById(newBookingId).populate("room").populate("slots").populate("user");
   return lastBookinged;
-  // return result;
 };
-
-export const bookingService = { addBookingDb };
+const getAllBookingFromDb = async () => {
+  const result = await Bookings.find().populate("room").populate("slots").populate("user");
+  return result;
+};
+export const bookingService = {
+  addBookingDb,
+  getAllBookingFromDb,
+};
