@@ -13,6 +13,16 @@ const addSlot = catchAsync(async (req, res) => {
   });
 });
 
+const getAllSlot = catchAsync(async (req, res) => {
+  const result = await slotService.getAllSlotDB(req.query);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Available slots retrieved successfully",
+    data: result,
+  });
+});
 export const slotController = {
   addSlot,
+  getAllSlot,
 };
