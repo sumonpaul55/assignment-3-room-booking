@@ -5,10 +5,10 @@ const bookingValidationSchema = z.object({
     room: z.string({ required_error: "Room Id is required" }),
     slots: z.array(z.string()),
     user: z.string({ required_error: "User Id is require" }),
-    date: z.date({ required_error: "booking date is required" }),
-    totalAmount: z.number({ required_error: "Total amount of selected slot" }),
-    isConfirmed: z.enum(["confirmed", "unconfirmed", "canceled"], { required_error: "Confirmation status is required" }),
-    isDeleted: z.boolean(),
+    date: z.string({ required_error: "booking date is required" }),
+    // totalAmount: z.string({ required_error: "Total amount of selected slot" }),
+    // isConfirmed: z.enum(["confirmed", "unconfirmed", "canceled"], { required_error: "Confirmation status is required" }),
+    isDeleted: z.boolean().optional(),
   }),
 });
 

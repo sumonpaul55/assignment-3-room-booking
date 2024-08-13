@@ -4,6 +4,6 @@ import authGuared from "../../middileWare/authGuared";
 
 const router = express.Router();
 
-router.get("/", authGuared("admin"), userController.getAllUsers);
+router.get("/", userController.getAllUsers);
 
 export const userRouters = router;
