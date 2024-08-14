@@ -16,5 +16,6 @@ router.put(
   validateRequest(bookingValidation.updateBookingValidationSchema),
   bookingController.udpateBooking
 );
+router.delete("/bookings/:id", authGuared(USER_ROLE.admin), bookingController.deleteBooking);
 
 export const bookingsRouter = router;

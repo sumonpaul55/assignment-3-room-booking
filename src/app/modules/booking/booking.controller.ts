@@ -53,4 +53,5 @@ export const bookingController = {
   getAllBooking,
   myBookings,
   udpateBooking,
+  deleteBooking,
 };

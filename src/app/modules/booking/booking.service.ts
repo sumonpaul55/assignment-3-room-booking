@@ -20,13 +20,13 @@ const addBookingDb = async (payload: TBooking) => {
   return lastBookinged;
 };
 const getAllBookingFromDb = async () => {
-  const result = await Bookings.find().populate("room").populate("slots").populate("user");
+  const result = await Bookings.find({ isDeleted: false }).populate("room").populate("slots").populate("user");
   return result;
 };
 
 const getMyBookings = async (payload: string) => {
   // get the user First
-  const userData = await User.findOne({ email: payload });
+  const userData = await User.findOne({ email: payload, isDeleted: false });
   const userId = userData?._id;
   const result = await Bookings.findOne({ user: userId }).populate("room").populate("slots").populate("user");
   if (!result) {
@@ -35,7 +35,6 @@ const getMyBookings = async (payload: string) => {
   return result;
 };
 const updateBookingDb = async (id: string, payload: TBooking) => {
-  console.log(id, payload);
   await Bookings.findByIdAndUpdate(id, payload, { new: true });
   const bookedi = await Bookings.findById(id).populate("room").populate("slots").populate("user");
   return bookedi;
