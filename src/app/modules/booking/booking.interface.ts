@@ -9,7 +9,7 @@ export type TBooking = {
   user: mongoose.Types.ObjectId;
   totalAmount?: number;
   isConfirmed?: "confirmed" | "unconfirmed" | "canceled";
-  isDeleted: boolean;
+  isDeleted?: boolean;
 };
 
 // export type TBooking = z.infer<typeof bookingValidation.bookingValidationSchema>;

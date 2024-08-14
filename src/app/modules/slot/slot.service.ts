@@ -10,7 +10,7 @@ const addSlotDb = async (payload: TSlot) => {
   // check slot block or not
   const isRoomAvailable = await Rooms.findById(payload.room);
   if (!isRoomAvailable) {
-    throw new AppError(httpStatus.NOT_FOUND, "Room not found with.");
+    throw new AppError(httpStatus.NOT_FOUND, "Room not found with this " + payload.room);
   }
   // check the slot shedule is available
   const isSlotAvailabe = await Slot.findOne({

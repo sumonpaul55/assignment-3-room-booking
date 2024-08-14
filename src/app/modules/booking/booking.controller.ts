@@ -30,8 +30,27 @@ const myBookings = catchAsync(async (req, res) => {
     data: reslut,
   });
 });
+const udpateBooking = catchAsync(async (req, res) => {
+  const result = await bookingService.updateBookingDb(req.params.id, req.body);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Booking updated successfully",
+    data: result,
+  });
+});
+const deleteBooking = catchAsync(async (req, res) => {
+  const result = await bookingService.deleteBookingDb(req.params.id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Booking deleted successfully",
+    data: result,
+  });
+});
 export const bookingController = {
   addBooking,
   getAllBooking,
   myBookings,
+  udpateBooking,
 };

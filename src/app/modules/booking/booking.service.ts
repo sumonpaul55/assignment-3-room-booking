@@ -23,10 +23,10 @@ const getAllBookingFromDb = async () => {
   const result = await Bookings.find().populate("room").populate("slots").populate("user");
   return result;
 };
+
 const getMyBookings = async (payload: string) => {
   // get the user First
   const userData = await User.findOne({ email: payload });
-
   const userId = userData?._id;
   const result = await Bookings.findOne({ user: userId }).populate("room").populate("slots").populate("user");
   if (!result) {
@@ -34,8 +34,25 @@ const getMyBookings = async (payload: string) => {
   }
   return result;
 };
+const updateBookingDb = async (id: string, payload: TBooking) => {
+  console.log(id, payload);
+  await Bookings.findByIdAndUpdate(id, payload, { new: true });
+  const bookedi = await Bookings.findById(id).populate("room").populate("slots").populate("user");
+  return bookedi;
+};
+const deleteBookingDb = async (id: string) => {
+  // confirm bookings is exist
+  const isExist = await Bookings.findById(id);
+  if (!isExist) {
+    throw new AppError(httpStatus.NOT_FOUND, "No Booking Found");
+  }
+  const result = await Bookings.findByIdAndUpdate(id, { isDeleted: true }, { new: true, runValidators: true });
+  return result;
+};
 export const bookingService = {
   addBookingDb,
   getAllBookingFromDb,
   getMyBookings,
+  updateBookingDb,
+  deleteBookingDb,
 };
