@@ -7,14 +7,28 @@ import { Slot } from "../slot/slot.model";
 import { User } from "../User/user.model";
 
 const addBookingDb = async (payload: TBooking) => {
-  const isExistRoom = await Rooms.findById(payload.room);
-  if (!isExistRoom) {
-    throw new AppError(httpStatus.NOT_FOUND, "Room not found");
+  // check slot by date and room available or not
+
+  const isExistSlot = await Slot.find({
+    _id: payload.slots,
+    date: payload.date,
+    isBooked: false,
+  });
+  console.log(isExistSlot);
+  if (!isExistSlot) {
+    throw new AppError(httpStatus.NOT_FOUND, "Not available slot found");
   }
-  const slotPrice = isExistRoom?.pricePerSlot;
-  payload.totalAmount = slotPrice * payload.slots.length;
+  // get rooms
+  const targetedRooms = await Rooms.findById(payload.room);
+  if (!targetedRooms) {
+    throw new AppError(httpStatus.NOT_FOUND, "Room not Found");
+  }
+  payload.totalAmount = targetedRooms?.pricePerSlot * payload.slots.length;
   const result = await Bookings.create(payload);
   const newBookingId = result._id;
+  // change the isBooked status
+  await Slot.updateMany({ _id: payload.slots }, { isBooked: true }, { new: true });
+
   const lastBookinged = await Bookings.findById(newBookingId).populate("room").populate("slots").populate("user");
   return lastBookinged;
 };
