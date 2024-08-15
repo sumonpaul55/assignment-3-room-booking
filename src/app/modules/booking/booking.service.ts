@@ -13,7 +13,6 @@ const addBookingDb = async (payload: TBooking) => {
   }
   const slotPrice = isExistRoom?.pricePerSlot;
   payload.totalAmount = slotPrice * payload.slots.length;
-
   const result = await Bookings.create(payload);
   const newBookingId = result._id;
   const lastBookinged = await Bookings.findById(newBookingId).populate("room").populate("slots").populate("user");
@@ -23,7 +22,6 @@ const getAllBookingFromDb = async () => {
   const result = await Bookings.find({ isDeleted: false }).populate("room").populate("slots").populate("user");
   return result;
 };
-
 const getMyBookings = async (payload: string) => {
   // get the user First
   const userData = await User.findOne({ email: payload, isDeleted: false });
