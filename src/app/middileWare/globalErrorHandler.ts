@@ -4,6 +4,9 @@ import handleZodError from "../erros/handleZodError";
 import { TErrorSources } from "../interface/error";
 import validateRequest from "./validateRequest";
 import handleValidationError from "../erros/handleValidationError";
+import handleCastError from "../erros/handleCastError";
+import handleDuplicateError from "../erros/handleDuplicateError";
+import AppError from "../erros/AppError";
 
 const globalErrorhandler: ErrorRequestHandler = (err, req, res, next) => {
   let statusCode = err.statusCode ? err.statusCode : 500;
@@ -24,8 +27,34 @@ const globalErrorhandler: ErrorRequestHandler = (err, req, res, next) => {
     statusCode = simpliFiedError.statusCode;
     message = simpliFiedError.message;
     errorSource = simpliFiedError.errorSource;
+  } else if (err?.name === "CastError") {
+    const simplifiedError = handleCastError(err);
+    statusCode = simplifiedError.statusCode;
+    message = simplifiedError.message;
+    errorSource = simplifiedError.errorSource;
+  } else if (err?.code === 11000) {
+    const simplifiedError = handleDuplicateError(err);
+    statusCode = simplifiedError.statusCode;
+    message = simplifiedError.message;
+    errorSource = simplifiedError.erroSource;
+  } else if (err instanceof AppError) {
+    statusCode = err.statusCode;
+    message = err.message;
+    errorSource = [
+      {
+        path: "",
+        message: err?.message,
+      },
+    ];
+  } else if (err instanceof Error) {
+    message = err.message;
+    errorSource = [
+      {
+        path: "",
+        message: err.message,
+      },
+    ];
   }
-
   return res.status(statusCode).json({
     success: false,
     message,
