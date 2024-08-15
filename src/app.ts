@@ -10,11 +10,12 @@ app.use(express.json());
 
 // application route
 app.use("/api", router);
-app.use(notFound);
-// global error
-app.use(globalErrorhandler);
+
 app.get("/", (req, res) => {
   res.send("Hi, this is Room Booking Server 😁😀!");
 });
+app.use(notFound);
+// global error
+app.use(globalErrorhandler);
 
 export default app;
