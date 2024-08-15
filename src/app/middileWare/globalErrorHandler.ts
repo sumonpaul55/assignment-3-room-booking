@@ -37,15 +37,6 @@ const globalErrorhandler: ErrorRequestHandler = (err, req, res, next) => {
     statusCode = simplifiedError.statusCode;
     message = simplifiedError.message;
     errorSource = simplifiedError.erroSource;
-  } else if (err instanceof AppError) {
-    statusCode = err.statusCode;
-    message = err.message;
-    errorSource = [
-      {
-        path: "",
-        message: err?.message,
-      },
-    ];
   } else if (err instanceof Error) {
     message = err.message;
     errorSource = [
@@ -54,6 +45,16 @@ const globalErrorhandler: ErrorRequestHandler = (err, req, res, next) => {
         message: err.message,
       },
     ];
+  }
+
+  if (err instanceof AppError) {
+    return res.status(statusCode).json({
+      success: false,
+      statusCode: statusCode,
+      message,
+      data: [],
+      // stack: config.NODE_ENV === "development" && err?.stack,
+    });
   }
   return res.status(statusCode).json({
     success: false,
