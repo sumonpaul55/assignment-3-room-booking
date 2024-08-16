@@ -36,6 +36,7 @@ const getArooms = catchAsync(async (req, res) => {
 // update rooms
 const updateRooms = catchAsync(async (req, res) => {
   const result = await roomsServices.updateRoomsIntoDb(req.params.id, req.body);
+
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,

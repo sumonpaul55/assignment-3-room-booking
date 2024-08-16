@@ -32,9 +32,6 @@ const getAllSlotDB = async (payload: any) => {
     return handleEmptyData(result);
   } else {
     const result = await Slot.find({ isBooked: false });
-    if (result.length > 0) {
-      throw new AppError(httpStatus.NOT_FOUND, "No Data Found");
-    }
     return handleEmptyData(result);
   }
 };

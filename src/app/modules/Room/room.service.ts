@@ -24,6 +24,7 @@ const updateRoomsIntoDb = async (id: string, payLoad: TRooms) => {
     new: true,
     runValidators: true,
   });
+  console.log(result);
   return result;
 };
 const deleteRoomFromDb = async (payload: string) => {
