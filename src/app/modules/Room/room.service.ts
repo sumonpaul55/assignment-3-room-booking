@@ -1,6 +1,7 @@
 import { isAborted } from "zod";
 import { TRooms } from "./room.interface";
 import { Rooms } from "./room.model";
+import handleEmptyData from "../../utils/handleEmptyData";
 
 const creatRooms = async (payLoad: TRooms) => {
   const result = await Rooms.create(payLoad);
@@ -9,12 +10,12 @@ const creatRooms = async (payLoad: TRooms) => {
 // get a rooms
 const getAllRoomsFromDb = async () => {
   const result = await Rooms.find();
-  return result;
+  return handleEmptyData(result);
 };
 // get a rooms
 const getAroomsFromDb = async (id: string) => {
   const result = await Rooms.findById(id);
-  return result;
+  return handleEmptyData(result);
 };
 // update rooms into db
 const updateRoomsIntoDb = async (id: string, payLoad: TRooms) => {

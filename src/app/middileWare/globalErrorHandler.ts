@@ -2,7 +2,6 @@ import { ErrorRequestHandler } from "express";
 import { ZodError } from "zod";
 import handleZodError from "../erros/handleZodError";
 import { TErrorSources } from "../interface/error";
-import validateRequest from "./validateRequest";
 import handleValidationError from "../erros/handleValidationError";
 import handleCastError from "../erros/handleCastError";
 import handleDuplicateError from "../erros/handleDuplicateError";
