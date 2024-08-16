@@ -12,16 +12,28 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = __importDefault(require("mongoose"));
-const config_1 = __importDefault(require("./app/config"));
-const app_1 = __importDefault(require("./app"));
-function main() {
+exports.User = void 0;
+const mongoose_1 = require("mongoose");
+const bcrypt_1 = __importDefault(require("bcrypt"));
+const config_1 = __importDefault(require("../../config"));
+const UserModelSchema = new mongoose_1.Schema({
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, select: 0 },
+    phone: { type: String, required: true },
+    role: {
+        type: String,
+        enum: ["user", "admin"],
+        default: "user",
+    },
+    address: { type: String, required: true },
+    isDeleted: { type: Boolean, default: false, select: 0 },
+});
+// password becrypt before save
+UserModelSchema.pre("save", function (next) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield mongoose_1.default.connect(config_1.default.db_url);
-        // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
-        app_1.default.listen(config_1.default.port, () => {
-            console.log(`Example app listening on port ${config_1.default.port}`);
-        });
+        this.password = yield bcrypt_1.default.hash(this.password, Number(config_1.default.BCRYPT_SALTROUND));
+        next();
     });
-}
-main();
+});
+exports.User = (0, mongoose_1.model)("User", UserModelSchema);

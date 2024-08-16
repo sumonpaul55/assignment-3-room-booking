@@ -12,38 +12,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.authController = void 0;
+exports.userController = void 0;
 const http_status_1 = __importDefault(require("http-status"));
 const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
-const sendResponse_1 = __importDefault(require("../../utils/sendResponse"));
-const auth_service_1 = require("./auth.service");
-const AppError_1 = __importDefault(require("../../erros/AppError"));
-const signUp = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield auth_service_1.authServices.signUpIntoDb(req.body);
-    (0, sendResponse_1.default)(res, {
-        statusCode: http_status_1.default.OK,
-        success: true,
-        message: "User registered successfully",
-        data: result,
-    });
-}));
-// login
-const login = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const user_service_1 = require("./user.service");
+const getAllUsers = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(req.user);
+    const result = yield user_service_1.userServices.getAllUsersFromDb();
     try {
-        const result = yield auth_service_1.authServices.loginDb(req.body);
         res.status(http_status_1.default.OK).json({
             success: true,
             statusCode: http_status_1.default.OK,
-            message: "User logged in successfully",
-            token: result === null || result === void 0 ? void 0 : result.token,
-            data: result === null || result === void 0 ? void 0 : result.existingUser,
+            message: "All Users Retrived successfully",
+            data: result,
         });
     }
-    catch (error) {
-        throw new AppError_1.default(http_status_1.default.INTERNAL_SERVER_ERROR, error);
-    }
+    catch (error) { }
 }));
-exports.authController = {
-    signUp,
-    login,
+exports.userController = {
+    getAllUsers,
 };
